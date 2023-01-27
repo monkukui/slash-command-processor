@@ -42,7 +42,7 @@ jobs:
           script: |
             github.rest.issues.createComment({
               issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
-              owner: `${{ github.repository_owner }}`,
-              repo: `${{ github.repository }}`,
+              owner: monkukui,
+              repo: mercari-admin-2-jp,
               body: `test comment`
             })
