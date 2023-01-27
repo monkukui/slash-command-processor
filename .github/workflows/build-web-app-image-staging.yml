@@ -21,22 +21,6 @@ jobs:
       statuses: 'write'
       pull-requests: 'write'
     steps:
-      - name: Dump job inputs
-        run: echo '${{ toJSON(inputs) }}'
-      - name: Dump job context
-        run: echo '${{ toJSON(job) }}'
-      - name: Dump steps context
-        run: echo '${{ toJSON(steps) }}'
-      - name: Dump runner context
-        run: echo '${{ toJSON(runner) }}'
-      - name: Dump strategy context
-        run: echo '${{ toJSON(strategy) }}'
-      - name: Dump matrix context
-        run: echo '${{ toJSON(matrix) }}'
-      - name: Dump GitHub context
-        run: echo '${{ toJSON(github) }}'
-      - name: Dump issue_number
-        run: echo '${{ github.event.client_payload.github.payload.issue.number }}'
       - uses: actions/github-script@v6
         with:
           script: |
