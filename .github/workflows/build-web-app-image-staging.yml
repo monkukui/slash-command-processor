@@ -56,3 +56,7 @@ jobs:
               pull_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
             });
             return pr.data.head.sha ;
+
+      - run: |
+        echo ${{ steps.sha.outputs.result }}
+        echo ${{ steps.pr-numa.outputs.result }}
