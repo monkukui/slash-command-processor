@@ -40,9 +40,10 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
+            const body = (github.event.client_payload.pull_request.mergeable) ? "PR should be mergeable" : "ok";
             github.rest.issues.createComment({
               issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
               owner: "monkukui",
               repo: "slash-command-processor",
-              body: `test comment, mergable = ${{ github.event.client_payload.pull_request.mergeable }}`
-            })
+              body: body,
+            });
