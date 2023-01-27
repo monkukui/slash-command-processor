@@ -16,6 +16,8 @@ jobs:
   build-stg-command:
     runs-on: ubuntu-latest
     steps:
+    - name: dump
+      run: echo '${{ inputs }}'
     - name: comment test
       uses: actions/github-script@v6
       with:
