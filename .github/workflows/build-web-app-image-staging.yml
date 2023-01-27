@@ -37,7 +37,7 @@ jobs:
           script: |
             github.rest.issues.createComment({
               issue_number: github.event.client_payload.github.payload.issue.number,
-              owner: 'monkukui'
-              repo: 'slash-command-processor'
-              body: 'test comment'
+              owner: github.repository_owner,
+              repo: github.repository,
+              body: `test comment`
             })
