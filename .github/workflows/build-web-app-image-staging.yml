@@ -1,7 +1,7 @@
-name: example-command
+name: build-stg-command
 on:
   repository_dispatch:
-    types: [example-command]
+    types: [build-stg-command]
 jobs:
   example:
     runs-on: ubuntu-latest
