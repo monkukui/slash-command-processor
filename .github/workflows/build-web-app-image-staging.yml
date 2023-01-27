@@ -30,14 +30,14 @@ jobs:
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
                 owner: "monkukui",
                 repo: "slash-command-processor",
-                body: "ok",
+                body: "ok: ${{ mergeable }}",
               });
             } else {
               github.rest.issues.createComment({
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
                 owner: "monkukui",
                 repo: "slash-command-processor",
-                body: "ng",
+                body: "ng: ${{ mergeable }}",
               });
             }
       - name: Error handling
