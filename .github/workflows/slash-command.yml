@@ -20,8 +20,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `⚙️ Start to build stg image! ${{ context.issue.number }}, ${{ context.repo.owner }}, ${{ context.repo.repo }}
-            Check the progress [here](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}).`
+              body: `hoge`
             })
       - name: Build stg
         uses: peter-evans/slash-command-dispatch@v3
