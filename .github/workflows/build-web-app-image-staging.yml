@@ -60,4 +60,4 @@ jobs:
       - name: Dump sha
         run: echo '${{ steps.sha.outputs.result }}'
       - name: Dump pr-num
-        run: echo '${{ steps.pr-numa.outputs.result }}'
+        run: echo '${{ steps.pr-num.outputs.result }}'
