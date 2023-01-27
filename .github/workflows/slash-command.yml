@@ -6,8 +6,16 @@ jobs:
   slashCommandDispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: Dump job context
-        run: echo '${{ toJSON(context) }}'
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `⚙️ Start to build stg image!
+            Check the progress [here](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}).`
+            })
       - name: Build stg
         uses: peter-evans/slash-command-dispatch@v3
         with:
