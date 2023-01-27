@@ -57,6 +57,7 @@ jobs:
             });
             return pr.data.head.sha ;
 
-      - run: |
-        echo ${{ steps.sha.outputs.result }}
-        echo ${{ steps.pr-numa.outputs.result }}
+      - name: Dump sha
+        run: echo '${{ steps.sha.outputs.result }}'
+      - name: Dump pr-num
+        run: echo '${{ steps.pr-numa.outputs.result }}'
