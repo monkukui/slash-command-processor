@@ -24,6 +24,7 @@ jobs:
       - uses: actions/github-script@v6
         id: deploy-check
         with:
+          result-encoding: string
           script: |
             const mergeable = `${{ github.event.client_payload.pull_request.mergeable }}`;
             if (mergeable === "true") {
@@ -44,7 +45,7 @@ jobs:
               return "cannnot deploy"
             }
       - run: |
-          if [[ "${{steps.deploy-check.outputs.result}}" != "can deploy" ]]; then
+          if [ ${steps.deploy-check.outputs.result} != "can deploy" ]; then
             exit 1
           fi
       - run: echo "hoge"
