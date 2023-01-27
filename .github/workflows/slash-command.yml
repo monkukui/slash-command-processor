@@ -6,13 +6,13 @@ jobs:
   slashCommandDispatch:
     runs-on: ubuntu-latest
     steps:
-      - name: Slash Command Dispatch
+      - name: Build stg
         uses: peter-evans/slash-command-dispatch@v3
         with:
           token: ${{ secrets.PAT }}
           commands: build-stg
           repository: monkukui/slash-command-processor
-      - name: Slash Command Dispatch
+      - name: Build debug
         uses: peter-evans/slash-command-dispatch@v3
         with:
           token: ${{ secrets.PAT }}
