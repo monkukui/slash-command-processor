@@ -31,3 +31,12 @@ jobs:
       - name: Dump GitHub context
         id: github_context_step
         run: echo '${{ toJSON(github) }}'
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: '${{ github.event.client_payload.github.payload.issue.number }}'
+              owner: 'monkukui'
+              repo: 'slash-command-processor'
+              body: 'test comment'
+            })
