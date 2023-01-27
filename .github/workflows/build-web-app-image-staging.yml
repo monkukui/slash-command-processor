@@ -41,7 +41,7 @@ jobs:
         with:
           script: |
             github.rest.issues.createComment({
-              issue_number: 3,
+              issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
               owner: "monkukui",
               repo: "slash-command-processor",
               body: `test comment ${{ github.event.client_payload.github.payload.issue.number }}`
