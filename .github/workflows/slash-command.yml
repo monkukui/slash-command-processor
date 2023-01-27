@@ -13,6 +13,8 @@ jobs:
       pull-requests: 'write'
 
     steps:
+      - name: Dump context
+        run: echo '${{ toJSON(context) }}'
       - uses: actions/github-script@v6
         with:
           script: |
