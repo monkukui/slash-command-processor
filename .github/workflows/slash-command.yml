@@ -12,6 +12,9 @@ jobs:
           token: ${{ secrets.PAT }}
           commands: build-stg
           repository: monkukui/slash-command-processor
+          issue_number: context.issue.number,
+          owner: context.repo.owner,
+          repo: context.repo.repo,
       - name: Build debug
         uses: peter-evans/slash-command-dispatch@v3
         with:
