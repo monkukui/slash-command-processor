@@ -29,10 +29,8 @@ jobs:
       - name: Dump matrix context
         run: echo '${{ toJSON(matrix) }}'
       - name: Dump GitHub context
-        id: github_context_step
         run: echo '${{ toJSON(github) }}'
       - name: Dump issue_number
-        id: github_context_step
         run: echo '${{ github.event.client_payload.github.payload.issue.number }}'
       - uses: actions/github-script@v6
         with:
