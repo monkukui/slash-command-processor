@@ -20,16 +20,16 @@ jobs:
             if (mergeable === "true") {
               github.rest.issues.createComment({
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
-                owner: ${{ github.repository_owner }},
-                repo: ${{ github.event.client_payload.github.payload.repository.name }},
+                owner: `${{ github.repository_owner }}`,
+                repo: `${{ github.event.client_payload.github.payload.repository.name }}`,
                 body: `⚙️  Start to build stg image!
               Check the progress [here](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}).`
               });
             } else {
               github.rest.issues.createComment({
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
-                owner: ${{ github.repository_owner }},
-                repo: ${{ github.event.client_payload.github.payload.repository.name }},
+                owner: `${{ github.repository_owner }}`,
+                repo: `${{ github.event.client_payload.github.payload.repository.name }}`,
                 body: `❌ Cannot build stg image. PR should be mergeable.`
               });
               core.setFailed('PR should be mergeable.');
