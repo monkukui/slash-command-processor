@@ -25,19 +25,19 @@ jobs:
         with:
           script: |
             const mergeable = `${{ github.event.client_payload.pull_request.mergeable }}`;
-            if (mergeable === "true") {
+            if (mergeable === "ttrue") {
               github.rest.issues.createComment({
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
                 owner: "monkukui",
                 repo: "slash-command-processor",
-                body: `ok: ${{ mergeable }}`,
+                body: "ok",
               });
             } else {
               github.rest.issues.createComment({
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
                 owner: "monkukui",
                 repo: "slash-command-processor",
-                body: `ng: ${{ mergeable }}`,
+                body: "ng",
               });
             }
       - name: Error handling
