@@ -13,8 +13,6 @@ jobs:
       pull-requests: 'write'
 
     steps:
-      - name: Dump context
-        run: echo '${{ toJSON(context) }}'
       - uses: actions/github-script@v6
         with:
           script: |
@@ -22,7 +20,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: `⚙️ Start to build stg image!
+              body: `⚙️ Start to build stg image! ${{ context.issue.number }}, ${{ context.repo.owner }}, ${{ context.repo.repo }}
             Check the progress [here](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}).`
             })
       - name: Build stg
