@@ -40,7 +40,6 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            if (git)
             github.rest.issues.createComment({
               issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
               owner: "monkukui",
