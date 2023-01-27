@@ -40,9 +40,10 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
+            if (git)
             github.rest.issues.createComment({
               issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
-              owner: monkukui,
-              repo: mercari-admin-2-jp,
-              body: `test comment`
+              owner: "monkukui",
+              repo: "mercari-admin-2-jp",
+              body: `test comment, mergable = ${{ github.event.client_payload.pull_request.mergeable }}`
             })
