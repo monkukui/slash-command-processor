@@ -3,7 +3,7 @@ on:
   repository_dispatch:
     types: [build-stg-command]
 jobs:
-  example:
+  build-stg-command:
     runs-on: ubuntu-latest
     steps:
     - name: comment test
@@ -15,14 +15,4 @@ jobs:
             owner: context.repo.owner,
             repo: context.repo.repo,
             body: `comment test`
-          })
-    - name: comment test
-      uses: actions/github-script@v6
-      with:
-        script: |
-          github.rest.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: `comment test 2`
           })

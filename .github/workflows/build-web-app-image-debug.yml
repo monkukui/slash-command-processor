@@ -3,7 +3,7 @@ on:
   repository_dispatch:
     types: [build-debug-command]
 jobs:
-  example:
+  build-debug-command:
     runs-on: ubuntu-latest
     steps:
       - name: Add reaction
