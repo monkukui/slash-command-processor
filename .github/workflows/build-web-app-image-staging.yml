@@ -17,14 +17,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: dump
-      run: echo '${{ inputs }}'
+      run: echo '${{ toJSON(inputs) }}'
     - name: comment test
       uses: actions/github-script@v6
       with:
         script: |
           github.rest.issues.createComment({
-            issue_number: ${{ inputs.issue_number }},
-            owner: ${{ inputs.owner }},
-            repo: ${{ inputs.repo }},
+            issue_number: `${{ inputs.issue_number }}`,
+            owner: `${{ inputs.owner }}`,
+            repo: `${{ inputs.repo }}`,
             body: `comment test`
           })
