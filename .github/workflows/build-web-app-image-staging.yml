@@ -32,16 +32,16 @@ jobs:
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
                 owner: "monkukui",
                 repo: "slash-command-processor",
-                body: "ok",
+                body: `⚙️  Start to build stg image!
+              Check the progress [here](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}).`
               });
-              return "can deploy";
             } else {
               github.rest.issues.createComment({
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
                 owner: "monkukui",
                 repo: "slash-command-processor",
-                body: "ng",
+                body: `❌ Cannot build stg image. PR should be mergeable.`
               });
-              core.setFailed('dame');
+              core.setFailed('PR should be mergeable.');
             }
       - run: echo "hoge"
