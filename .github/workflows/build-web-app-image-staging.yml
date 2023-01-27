@@ -21,8 +21,6 @@ jobs:
       statuses: 'write'
       pull-requests: 'write'
     steps:
-      - name: Dump job context
-        run: echo '${{ toJSON(context) }}'
       - name: Dump job inputs
         run: echo '${{ toJSON(inputs) }}'
       - name: Dump job context
