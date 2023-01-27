@@ -34,14 +34,16 @@ jobs:
               });
               core.setFailed('PR should be mergeable.');
             }
+
       - name: Get PR Number
         id: pr-num
         uses: actions/github-script@v6
         with:
           result-encoding: string
-          script: |
+          script:
             const { number } = context.issue;
-            return number
+            const number = `${{ github.event.client_payload.github.payload.issue.number }}`;
+            return number;
 
       - name: Get PR SHA
         id: sha
@@ -51,8 +53,8 @@ jobs:
           script: |
             const { owner, repo, number } = context.issue;
             const pr = await github.rest.pulls.get({
-              owner,
-              repo,
-              pull_number: number,
+              owner: `${{ github.repository_owner }}`,
+              repo: `${{ github.event.client_payload.github.payload.repository.name }}`,
+              pull_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
             });
-            return pr.data.head.sha 
+            return pr.data.head.sha ;
