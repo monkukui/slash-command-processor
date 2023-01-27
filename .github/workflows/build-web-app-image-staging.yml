@@ -1,16 +1,6 @@
 name: build-stg-command
 on:
   repository_dispatch:
-    inputs:
-      issue_number:
-        required: true
-        type: string
-      owner:
-        required: true
-        type: string
-      repo:
-        required: true
-        type: string
     types: [build-stg-command]
 jobs:
   build-stg-command:
@@ -30,16 +20,16 @@ jobs:
             if (mergeable === "true") {
               github.rest.issues.createComment({
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
-                owner: "monkukui",
-                repo: "slash-command-processor",
+                owner: ${{ github.repository_owner }},
+                repo: ${{ github.event.client_payload.github.payload.repository.name }},
                 body: `⚙️  Start to build stg image!
               Check the progress [here](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}).`
               });
             } else {
               github.rest.issues.createComment({
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
-                owner: "monkukui",
-                repo: "slash-command-processor",
+                owner: ${{ github.repository_owner }},
+                repo: ${{ github.event.client_payload.github.payload.repository.name }},
                 body: `❌ Cannot build stg image. PR should be mergeable.`
               });
               core.setFailed('PR should be mergeable.');
