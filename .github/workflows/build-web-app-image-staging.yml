@@ -30,8 +30,8 @@ jobs:
             if (mergeable === "true") {
               github.rest.issues.createComment({
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
-                owner: "monkukui",
-                repo: "slash-command-processor",
+                owner: `${{ github.repository_owner }}`
+                repo: `${{ github.repository }}`,
                 body: `⚙️  Start to build stg image!
               Check the progress [here](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}).`
               });
