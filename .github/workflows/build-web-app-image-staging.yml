@@ -42,10 +42,6 @@ jobs:
                 repo: "slash-command-processor",
                 body: "ng",
               });
-              return "cannnot deploy"
+              core.setFailed('dame');
             }
-      - run: |
-          if [ ${{steps.deploy-check.outputs.result}} != "can deploy" ]; then
-            exit 1
-          fi
       - run: echo "hoge"
