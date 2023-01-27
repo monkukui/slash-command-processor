@@ -22,6 +22,7 @@ jobs:
       pull-requests: 'write'
     steps:
       - uses: actions/github-script@v6
+        id: deploy-check
         with:
           script: |
             const mergeable = `${{ github.event.client_payload.pull_request.mergeable }}`;
@@ -32,6 +33,7 @@ jobs:
                 repo: "slash-command-processor",
                 body: "ok",
               });
+              return "can deploy";
             } else {
               github.rest.issues.createComment({
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
@@ -39,8 +41,10 @@ jobs:
                 repo: "slash-command-processor",
                 body: "ng",
               });
-              exit 1;
+              return "cannnot deploy"
             }
-      - name: On success
-        run: |
-          echo "Success"
+      - run: |
+          if [[ "${{steps.deploy-check.outputs.result}}" == "cannot deploy" ]]; then
+            exit 1
+          fi
+      - run: echo "hoge"
