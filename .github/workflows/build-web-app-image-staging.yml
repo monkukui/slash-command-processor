@@ -61,6 +61,8 @@ jobs:
 
       - name: Dump mergeable
         run: echo '${{ github.event.client_payload.pull_request.mergeable }}'
+      - name: Dump mergeable_state
+        run: echo '${{ github.event.client_payload.pull_request.mergeable_state }}'
       - name: Dump sha
         run: echo '${{ steps.sha.outputs.result }}'
       - name: Dump pr-num
