@@ -15,10 +15,16 @@ jobs:
         id: deploy-check
         with:
           script: |
-            const mergeable = github.event.client_payload.pull_request.mergeable;
+            const mergeable = `${{ github.event.client_payload.pull_request.mergeable }}`;
 
-            if (mergeable) {
-              let body = `${{ mergeable }}`
+            if (mergeable === "true") {
+              let body = "❌ Cannot build stg image:";
+              body += `
+              - hoge
+              `;
+              body += `
+              - huga
+              `;
 
               github.rest.issues.createComment({
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
@@ -57,7 +63,7 @@ jobs:
               pull_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
             });
 
-            return pr.data.head.sha ;
+            return pr.data.head.sha;
 
       - name: Dump github
         run: echo '${{ toJSON(github) }}'
