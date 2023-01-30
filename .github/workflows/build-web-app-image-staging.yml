@@ -16,6 +16,8 @@ jobs:
         with:
           script: |
             const mergeable = `${{ github.event.client_payload.pull_request.mergeable }}`;
+            const mergeable_state = `${{ github.event.client_payload.pull_request.mergeable_state }}`;
+            const draft = `${{ github.event.client_payload.pull_request.draft }}`;
 
             if (mergeable === "true") {
               let body = "❌ Cannot build stg image:";
@@ -23,6 +25,12 @@ jobs:
               - hoge`;
               body += `
               - huga`;
+              if (draft === "true") {
+                body += `
+                - PR is draft`;
+              }
+
+
 
               github.rest.issues.createComment({
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
