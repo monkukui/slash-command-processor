@@ -28,8 +28,7 @@ jobs:
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
                 owner: `${{ github.repository_owner }}`,
                 repo: `${{ github.event.client_payload.github.payload.repository.name }}`,
-                body: `⚙️  Start to build stg image!
-              Check the progress [here](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}).`
+                body: body
               });
             } else {
               github.rest.issues.createComment({
