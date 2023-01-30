@@ -17,8 +17,13 @@ jobs:
           result-encoding: string
           script: |
             const mergeable = `${{ github.event.client_payload.pull_request.mergeable }}`;
+            const mergeable_state = `${{ github.event.client_payload.pull_request.mergeable_state }}`;
 
             if (mergeable === "true") {
+              let body = "hoge"
+              body += `- ❌ huga ${{ mergeable }}`;
+              body += `- ❌ piyo ${{ mergeable_state }}`;
+
               github.rest.issues.createComment({
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
                 owner: `${{ github.repository_owner }}`,
