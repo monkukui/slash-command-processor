@@ -18,12 +18,13 @@ jobs:
             const mergeable = `${{ github.event.client_payload.pull_request.mergeable }}`;
 
             if (mergeable === "true") {
+              let body = "hoge";
 
               github.rest.issues.createComment({
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
                 owner: `${{ github.repository_owner }}`,
                 repo: `${{ github.event.client_payload.github.payload.repository.name }}`,
-                body: `hoge`
+                body: body
               });
             } else {
               github.rest.issues.createComment({
