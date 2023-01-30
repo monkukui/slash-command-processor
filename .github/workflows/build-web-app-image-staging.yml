@@ -15,11 +15,10 @@ jobs:
         id: deploy-check
         with:
           script: |
-            const mergeable = `${{ github.event.client_payload.pull_request.mergeable }}`;
+            const mergeable = github.event.client_payload.pull_request.mergeable;
 
-            if (mergeable === "true") {
-              let body = "hoge";
-              body += mergeable;
+            if (mergeable) {
+              let body = `${{ mergeable }}`
 
               github.rest.issues.createComment({
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
