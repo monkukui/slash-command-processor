@@ -21,14 +21,11 @@ jobs:
 
             if (mergeable === "true") {
               let body = "❌ Cannot build stg image:";
-              body += `
-              - hoge`;
-              body += `
-              - huga`;
+              body += "\n- hoge";
+              body += "\n- huga";
 
               if (draft === "true") {
-                body += `
-                - piyo`;
+                body += "\n- piyo";
               }
 
 
