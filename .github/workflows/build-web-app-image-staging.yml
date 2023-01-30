@@ -17,7 +17,7 @@ jobs:
           result-encoding: string
           script: |
             const mergeable = `${{ github.event.client_payload.pull_request.mergeable }}`;
-            echo "$mergeable";
+
             if (mergeable === "true") {
               github.rest.issues.createComment({
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
@@ -43,7 +43,6 @@ jobs:
           result-encoding: string
           script:
             const number = `${{ github.event.client_payload.github.payload.issue.number }}`;
-            echo "$number";
             return number;
 
       - name: Get PR SHA
@@ -58,9 +57,10 @@ jobs:
               pull_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
             });
 
-            echo "${pr.data.head.sha}";
             return pr.data.head.sha ;
 
+      - name: Dump mergeable
+        run: echo '${{ github.event.client_payload.pull_request.mergeable }}'
       - name: Dump sha
         run: echo '${{ steps.sha.outputs.result }}'
       - name: Dump pr-num
