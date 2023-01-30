@@ -14,19 +14,16 @@ jobs:
       - uses: actions/github-script@v6
         id: deploy-check
         with:
-          result-encoding: string
           script: |
             const mergeable = `${{ github.event.client_payload.pull_request.mergeable }}`;
 
             if (mergeable === "true") {
-              let body = "hoge"
-              body += `- ❌ huga ${{ mergeable }}`;
 
               github.rest.issues.createComment({
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
                 owner: `${{ github.repository_owner }}`,
                 repo: `${{ github.event.client_payload.github.payload.repository.name }}`,
-                body: body
+                body: `hoge`
               });
             } else {
               github.rest.issues.createComment({
