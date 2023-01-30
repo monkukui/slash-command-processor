@@ -25,9 +25,10 @@ jobs:
               - hoge`;
               body += `
               - huga`;
+
               if (draft === "true") {
                 body += `
-                - PR is draft`;
+                - piyo`;
               }
 
 
