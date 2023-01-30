@@ -19,7 +19,7 @@ jobs:
 
             if (mergeable === "true") {
               let body = "hoge";
-              body += `\n${{ mergeable }}`;
+              body += mergeable;
 
               github.rest.issues.createComment({
                 issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
