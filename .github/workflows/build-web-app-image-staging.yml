@@ -21,8 +21,8 @@ jobs:
 
             if (mergeable === "true") {
               let body = "❌ Cannot build stg image:";
-              body += "\n- hoge";
-              body += "\n- huga";
+              body += `\n- :x: Unexpected error: mergeable = ${mergeable}`;
+              body += `\n- :x: Unexpected error: mergeable_state = ${mergeable_state}`;
 
               if (draft === "true") {
                 body += "\n- piyo";
