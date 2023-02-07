@@ -28,17 +28,11 @@ jobs:
               pull_number: number,
             });
             return pr
-      - name: Dump sha
-        run: echo '${{ steps.pr.outputs.result }}'
-      - name: Dump GitHub context
-        run: echo '${{ toJSON(github) }}'
       - uses: actions/github-script@v6
         id: deploy-check
         with:
           script: |
-            const mergeable = `${{ github.event.client_payload.pull_request.mergeable }}`;
-            const mergeable_state = `${{ github.event.client_payload.pull_request.mergeable_state }}`;
-            const draft = `${{ github.event.client_payload.pull_request.draft }}`;
+            const { mergeable, mergeable_state, draft } = steps.pr.outputs.result;
 
             if (mergeable === "true") {
               let body = "❌ Cannot build stg image:";
