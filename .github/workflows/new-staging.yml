@@ -27,7 +27,7 @@ jobs:
               repo,
               pull_number: number,
             });
-            return toJSON(pr);
+            return pr;
       - uses: actions/github-script@v6
         id: deploy-check
         with:
