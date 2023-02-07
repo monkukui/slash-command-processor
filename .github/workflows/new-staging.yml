@@ -16,11 +16,10 @@ jobs:
       statuses: 'write'
       pull-requests: 'write'
     steps:
-      - name: Get PR SHA
-        id: sha
+      - name: Get pr
+        id: pr
         uses: actions/github-script@v6
         with:
-          result-encoding: string
           script: |
             const { owner, repo, number } = context.issue;
             const pr = await github.rest.pulls.get({
@@ -28,9 +27,9 @@ jobs:
               repo,
               pull_number: number,
             });
-            return pr.data.head.sha 
+            return pr
       - name: Dump sha
-        run: echo '${{ steps.sha.outputs.result }}'
+        run: echo '${{ steps.pr.outputs.result }}'
       - name: Dump GitHub context
         run: echo '${{ toJSON(github) }}'
       - uses: actions/github-script@v6
