@@ -5,6 +5,7 @@ on:
 
 jobs:
   new-stg-command:
+    runs-on: ubuntu-latest
     if: |
       github.event_name == 'issue_comment' &&
       contains(github.event.comment.html_url, '/pull/') &&
