@@ -27,7 +27,10 @@ jobs:
               pull_number: number,
             });
 
-            const { mergeable, mergeable_state, draft } = pr;
+            const { mergeable } = pr.mergeable;
+            const { mergeable_state } = pr.mergeable_state;
+            const { draft } = pr.draft;
+
 
             if (!(mergeable === "true")) {
               let body = "❌ Cannot build stg image:";
