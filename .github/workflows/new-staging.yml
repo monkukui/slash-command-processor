@@ -1,0 +1,88 @@
+name: build-stg-command
+on:
+  issue_comment:
+    types: [created, edited]
+
+jobs:
+  new-stg-command:
+    if: |
+      github.event_name == 'issue_comment' &&
+      contains(github.event.comment.html_url, '/pull/') &&
+      startsWith(github.event.comment.body, '/build stg')
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+      statuses: 'write'
+      pull-requests: 'write'
+    steps:
+      - name: Dump GitHub context
+        id: github_context_step
+        run: echo '${{ toJSON(github) }}'
+      - uses: actions/github-script@v6
+        id: deploy-check
+        with:
+          script: |
+            const mergeable = `${{ github.event.client_payload.pull_request.mergeable }}`;
+            const mergeable_state = `${{ github.event.client_payload.pull_request.mergeable_state }}`;
+            const draft = `${{ github.event.client_payload.pull_request.draft }}`;
+
+            if (mergeable === "true") {
+              let body = "❌ Cannot build stg image:";
+              body += `\n- :x: Unexpected error: mergeable = ${mergeable}`;
+              body += `\n- :x: Unexpected error: mergeable_state = ${mergeable_state}`;
+
+              if (draft === "true") {
+                body += "\n- piyo";
+              }
+
+
+
+              github.rest.issues.createComment({
+                issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
+                owner: `${{ github.repository_owner }}`,
+                repo: `${{ github.event.client_payload.github.payload.repository.name }}`,
+                body: body
+              });
+            } else {
+              github.rest.issues.createComment({
+                issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
+                owner: `${{ github.repository_owner }}`,
+                repo: `${{ github.event.client_payload.github.payload.repository.name }}`,
+                body: `❌ Cannot build stg image. PR should be mergeable.`
+              });
+              core.setFailed('PR should be mergeable.');
+            }
+
+      - name: Get PR Number
+        id: pr-num
+        uses: actions/github-script@v6
+        with:
+          result-encoding: string
+          script:
+            const number = `${{ github.event.client_payload.github.payload.issue.number }}`;
+            return number;
+
+      - name: Get PR SHA
+        id: sha
+        uses: actions/github-script@v6
+        with:
+          result-encoding: string
+          script: |
+            const pr = await github.rest.pulls.get({
+              owner: `${{ github.repository_owner }}`,
+              repo: `${{ github.event.client_payload.github.payload.repository.name }}`,
+              pull_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
+            });
+
+            return pr.data.head.sha;
+
+      - name: Dump github
+        run: echo '${{ toJSON(github) }}'
+      - name: Dump mergeable
+        run: echo '${{ github.event.client_payload.pull_request.mergeable }}'
+      - name: Dump mergeable_state
+        run: echo '${{ github.event.client_payload.pull_request.mergeable_state }}'
+      - name: Dump sha
+        run: echo '${{ steps.sha.outputs.result }}'
+      - name: Dump pr-num
+        run: echo '${{ steps.pr-num.outputs.result }}'
