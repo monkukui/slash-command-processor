@@ -16,9 +16,22 @@ jobs:
       statuses: 'write'
       pull-requests: 'write'
     steps:
-      - name: Dump GitHub context1
-        run: echo '${{ toJSON(context) }}'
-      - name: Dump GitHub context2
+    - name: Get PR SHA
+      id: sha
+      uses: actions/github-script@v6
+      with:
+        result-encoding: string
+        script: |
+          const { owner, repo, number } = context.issue;
+          const pr = await github.rest.pulls.get({
+            owner,
+            repo,
+            pull_number: number,
+          });
+          return pr.data.head.sha 
+      - name: Dump sha
+        run: echo '${{ steps.sha.outputs.result }}'
+      - name: Dump GitHub context
         run: echo '${{ toJSON(github) }}'
       - uses: actions/github-script@v6
         id: deploy-check
@@ -62,8 +75,8 @@ jobs:
             const number = `${{ github.event.client_payload.github.payload.issue.number }}`;
             return number;
 
-      - name: Get PR SHA
-        id: sha
+      - name: Get PR SHA-2
+        id: sha-2
         uses: actions/github-script@v6
         with:
           result-encoding: string
@@ -82,7 +95,5 @@ jobs:
         run: echo '${{ github.event.client_payload.pull_request.mergeable }}'
       - name: Dump mergeable_state
         run: echo '${{ github.event.client_payload.pull_request.mergeable_state }}'
-      - name: Dump sha
-        run: echo '${{ steps.sha.outputs.result }}'
       - name: Dump pr-num
         run: echo '${{ steps.pr-num.outputs.result }}'
