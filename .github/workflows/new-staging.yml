@@ -32,7 +32,7 @@ jobs:
         id: deploy-check
         with:
           script: |
-            const { mergeable, mergeable_state, draft } = ${{ steps.pr.outputs.result }};
+            const { mergeable, mergeable_state, draft } = ${{ toJSON(steps.pr.outputs.result) }};
 
             if (mergeable === "true") {
               let body = "❌ Cannot build stg image:";
