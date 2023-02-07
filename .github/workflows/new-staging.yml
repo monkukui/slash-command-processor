@@ -16,8 +16,9 @@ jobs:
       statuses: 'write'
       pull-requests: 'write'
     steps:
-      - name: Dump GitHub context
-        id: github_context_step
+      - name: Dump GitHub context1
+        run: echo '${{ toJSON(context) }}'
+      - name: Dump GitHub context2
         run: echo '${{ toJSON(github) }}'
       - uses: actions/github-script@v6
         id: deploy-check
@@ -36,19 +37,17 @@ jobs:
                 body += "\n- piyo";
               }
 
-
-
               github.rest.issues.createComment({
-                issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
-                owner: `${{ github.repository_owner }}`,
-                repo: `${{ github.event.client_payload.github.payload.repository.name }}`,
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
                 body: body
               });
             } else {
               github.rest.issues.createComment({
-                issue_number: `${{ github.event.client_payload.github.payload.issue.number }}`,
-                owner: `${{ github.repository_owner }}`,
-                repo: `${{ github.event.client_payload.github.payload.repository.name }}`,
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
                 body: `❌ Cannot build stg image. PR should be mergeable.`
               });
               core.setFailed('PR should be mergeable.');
